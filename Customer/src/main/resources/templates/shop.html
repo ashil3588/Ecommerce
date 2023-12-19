@@ -84,7 +84,25 @@
                                 </div>
                                 <p th:text="${product.shortDescription}" class="mt-15"></p>
                                 <div class="detail-extralink" >
-
+                                    <form id="addToCart" th:action="@{/add-to-cart}" method="post">
+<!--                                        <select id="product_categories" name="selectedSizeId" class="form-control w-auto" required>-->
+<!--                                            <option th:value = "null">-SELECT SIZE-</option>-->
+<!--                                            <option th:each = "size : ${product.sizes}"-->
+<!--                                                    th:value = "${size.id}"-->
+<!--                                                    th:text = "${size.name}">-->
+<!--                                            </option>-->
+<!--                                        </select>-->
+                                        <div>
+                                            <input type="number" name="quantity"  size="2"
+                                                   value="1" min="1" step="1"
+                                                   class="w-auto">
+                                        </div>
+                                        <input type="hidden" name="productId" th:value="${product.id}" />
+                                        <div class="product-extra-link2">
+                                            <button   id="addToCartButton" type="submit" class="button button-add-to-cart">Add to cart</button>
+                                            <a aria-label="Add To Wishlist" class="action-btn hover-up" th:href="@{/add-wishlist}" th:data-product-id="${product.id}"><i class="fi-rs-heart"></i></a>
+                                        </div>
+                                    </form>
                                     <div class="rating-result" title="90%">
                                             <span>
                                                 <span>90%</span>
@@ -147,6 +165,35 @@
 <!-- Template  JS -->
 <script th:src="@{/js/shop.js?v=3.4}"></script>
 
+<script>
+    $(document).ready(function () {
+        $(".action-btn").click(function (event) {
+            event.preventDefault();
+
+            const productId = $(this).data("product-id");
+
+            console.log(productId);
+            $.ajax({
+                url: "/customer/add-wishlist",
+                type: "POST",
+                data: { productId: productId },
+                success: function (response) {
+                    alert("Added to wishlist successfully");
+                },
+                error: function (xhr, status, error) {
+
+                    if (xhr.status === 409) {
+                        alert("Product already exists in wishlist");
+                    }else if(xhr.status === 401){
+                        alert("User not logged in , Please Log in")
+                    } else {
+                        alert("Error adding to wishlist. Please try again later.");
+                    }
+                },
+            });
+        });
+    });
+</script>
 
 
 

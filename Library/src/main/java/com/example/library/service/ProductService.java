@@ -33,7 +33,11 @@ public interface ProductService {
 
     void deleteProduct(long id);
 
+    Long countAllProducts();
 
+    List<Object[]> getProductStats();
+
+    List<Object[]> getProductsStatsBetweenDates(Date startDate,Date endDate);
 
     Product findBYId(long id);
 

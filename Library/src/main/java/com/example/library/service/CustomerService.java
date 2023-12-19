@@ -23,4 +23,19 @@ public interface CustomerService {
     void enable(long id);
 
 
+    Customer update(CustomerDto customerDto);
+
+    CustomerDto findByEmailCustomerDto(String email);
+
+    CustomerDto updateAccount(CustomerDto customerDto,String email);
+
+    void changePass(CustomerDto customerDto);
+
+
+
+
+    void updateResetPasswordToken(String token, String email);
+    Customer getByResetPasswordToken(String token);
+    void updatePassword(Customer customer, String newPassword);
+
 }

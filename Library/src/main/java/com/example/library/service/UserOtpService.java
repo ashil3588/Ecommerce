@@ -8,3 +8,4 @@ public interface UserOtpService {
     public boolean existsByEmail(String email);
     public UserOtp findByEmail(String email);
 }
+

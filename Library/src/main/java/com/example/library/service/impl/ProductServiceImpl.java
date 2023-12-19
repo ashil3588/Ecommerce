@@ -1,10 +1,14 @@
 package com.example.library.service.impl;
 
 import com.example.library.dto.ProductDto;
+import com.example.library.model.CartItem;
 import com.example.library.model.Image;
 import com.example.library.model.Product;
+import com.example.library.model.Wishlist;
+import com.example.library.repository.CartItemRepository;
 import com.example.library.repository.ImageRepository;
 import com.example.library.repository.ProductRepository;
+import com.example.library.repository.WishlistRepository;
 import com.example.library.service.ProductService;
 import com.example.library.utils.ImageUpload;
 import jakarta.transaction.Transactional;
@@ -29,13 +33,18 @@ public class ProductServiceImpl implements ProductService {
 
 
     private ImageUpload imageUpload;
+    private CartItemRepository cartItemRepository;
+
+    private WishlistRepository wishlistRepository;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository,
-                              ImageUpload imageUpload, ImageRepository imageRepository) {
+                              ImageUpload imageUpload, ImageRepository imageRepository, CartItemRepository cartItemRepository, WishlistRepository wishlistRepository) {
         this.imageRepository = imageRepository;
         this.productRepository = productRepository;
         this.imageUpload = imageUpload;
+        this.cartItemRepository=cartItemRepository;
+        this.wishlistRepository=wishlistRepository;
     }
 
     @Override
@@ -235,13 +244,33 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(long id) {
         Product product = productRepository.findById(id);
         imageRepository.deleteImagesByProductId(id);
-
-
+        Set<CartItem> cartItemSet=product.getCartItems();
+        for(CartItem cartItem : cartItemSet){
+            cartItem.setProduct(null);
+            cartItemRepository.save(cartItem);
+        }
+        Wishlist wishlist=product.getWishlist();
+        if(wishlist!=null) {
+            wishlistRepository.delete(wishlist);
+        }
 
         productRepository.delete(product);
     }
 
+    @Override
+    public Long countAllProducts() {
+        return  productRepository.CountAllProducts();
+    }
 
+    @Override
+    public List<Object[]> getProductStats() {
+        return productRepository.getProductStatsForConfirmedOrders();
+    }
+
+    @Override
+    public List<Object[]> getProductsStatsBetweenDates(Date startDate, Date endDate) {
+        return productRepository.getProductsStatsForConfirmedOrdersBetweenDates(startDate,endDate);
+    }
 
 
     @Override

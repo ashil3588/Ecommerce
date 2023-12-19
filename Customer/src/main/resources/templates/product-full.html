@@ -446,6 +446,41 @@
 <footer th:replace="~{fragments::downbar}"></footer>
 
 
+<script>
+
+
+
+    $(document).ready(function () {
+        $(".action-btn").click(function (event) {
+            event.preventDefault();
+
+            const productId = $(this).data("product-id");
+
+            console.log(productId);
+            $.ajax({
+                url: "/customer/add-wishlist",
+                type: "POST",
+                data: { productId: productId },
+                success: function (response) {
+                    alert("Added to wishlist successfully");
+                },
+                error: function (xhr, status, error) {
+
+                    if (xhr.status === 409) {
+                        alert("Product already exists in wishlist");
+                    }else if(xhr.status === 401){
+                        alert("User not logged in , Please Log in")
+                    } else {
+                        alert("Error adding to wishlist. Please try again later.");
+                    }
+                },
+            });
+        });
+    });
+
+
+
+</script>
 <div th:replace = "~{fragments::script}"></div>
 <script th:src="@{/js/plugins/jquery.elevatezoom.js}"></script>
 <!-- Template  JS -->

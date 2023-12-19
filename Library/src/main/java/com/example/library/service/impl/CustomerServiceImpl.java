@@ -75,8 +75,88 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.save(customer);
     }
 
+    @Override
+    public Customer update(CustomerDto customerDto) {
+        Customer customer=customerRepository.findByEmail(customerDto.getEmail());
+        customer.setPassword(customerDto.getPassword());
+
+        return customerRepository.save(customer);
+    }
+
+    @Override
+    public CustomerDto findByEmailCustomerDto(String email) {
+        Customer customer = customerRepository.findByEmail(email);
+        CustomerDto customerDto=new CustomerDto();
+        customerDto.setEmail(customer.getEmail());
+        customerDto.setId(customer.getId());
+        customerDto.setFirstName(customer.getFirstName());
+        customerDto.setLastName(customer.getLastName());
+        customerDto.setMobileNumber(customer.getMobileNumber());
+        customerDto.setAddress(customer.getAddress());
+        customerDto.setPassword(customer.getPassword());
+        customerDto.set_activated(customer.is_activated());
+
+        return customerDto;
+    }
+
+    @Override
+    public CustomerDto updateAccount(CustomerDto customerDto, String email) {
+        Customer customer= findByEmail(email);
+        customer.setFirstName(customerDto.getFirstName());
+        customer.setLastName(customerDto.getLastName());
+        customer.setMobileNumber(customerDto.getMobileNumber());
+        customerRepository.save(customer);
+        CustomerDto customerDtoUpdated = convertEntityToDto(customer);
+        return customerDtoUpdated;
+    }
+
+    @Override
+    public void changePass(CustomerDto customerDto) {
+        Customer customer=customerRepository.findByEmail(customerDto.getEmail());
+        customer.setPassword(customerDto.getPassword());
+
+        customerRepository.save(customer);
+    }
 
 
 
+    public CustomerDto convertEntityToDto(Customer customer){
+        CustomerDto customerDto=new CustomerDto();
+        customerDto.setId(customer.getId());
+        customerDto.setFirstName(customer.getFirstName());
+        customerDto.setLastName(customer.getLastName());
+        customerDto.setMobileNumber(customer.getMobileNumber());
+        customerDto.set_activated(customer.is_activated());
+        customerDto.setPassword(customer.getPassword());
+
+        return customerDto;
+    }
+
+
+
+
+
+
+    @Override
+    public void updateResetPasswordToken(String token, String email)  {
+        Customer customer = customerRepository.findByEmail(email);
+        if (customer != null) {
+            customer.setResetPasswordToken(token);
+            customerRepository.save(customer);
+        }
+    }
+
+    @Override
+    public Customer getByResetPasswordToken(String token) {
+        return customerRepository.findByResetPasswordToken(token);
+    }
+
+    @Override
+    public void updatePassword(Customer customer, String newPassword) {
+        customer.setPassword(newPassword);
+
+        customer.setResetPasswordToken(null);
+        customerRepository.save(customer);
+    }
 
 }

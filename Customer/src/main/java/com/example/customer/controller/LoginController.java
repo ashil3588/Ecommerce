@@ -58,25 +58,25 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/dashboard")
-    public String getDashboard(@RequestParam(required = false) String tab, Model model, Principal principal, HttpSession session){
-        if(principal==null){
-            return "redirect:/login";
-        }else{
-            Customer customer = customerService.findByEmail(principal.getName());
-            session.setAttribute("userLoggedIn",true);
-            session.setAttribute("username", customer.getFirstName() + " " + customer.getLastName());
-            if(tab!=null && !tab.isEmpty()) {
-                model.addAttribute("openTab", tab);
-                System.out.println(tab);
-            }else{
-                model.addAttribute("openTab", "");
-            }
-            model.addAttribute("customer",customer);
-            model.addAttribute("title","Dashboard");
-            return "dashboard";
-        }
-    }
+//    @GetMapping("/dashboard")
+//    public String getDashboard(@RequestParam(required = false) String tab, Model model, Principal principal, HttpSession session){
+//        if(principal==null){
+//            return "redirect:/login";
+//        }else{
+//            Customer customer = customerService.findByEmail(principal.getName());
+//            session.setAttribute("userLoggedIn",true);
+//            session.setAttribute("username", customer.getFirstName() + " " + customer.getLastName());
+//            if(tab!=null && !tab.isEmpty()) {
+//                model.addAttribute("openTab", tab);
+//                System.out.println(tab);
+//            }else{
+//                model.addAttribute("openTab", "");
+//            }
+//            model.addAttribute("customer",customer);
+//            model.addAttribute("title","Dashboard");
+//            return "dashboard";
+//        }
+//    }
 
 
 

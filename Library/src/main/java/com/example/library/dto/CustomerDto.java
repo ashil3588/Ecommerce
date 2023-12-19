@@ -1,11 +1,13 @@
 package com.example.library.dto;
 
+import com.example.library.model.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,6 +36,8 @@ public class CustomerDto implements Serializable {
     private String confirmPassword;
 
     private boolean is_activated;
+
+    private List<Address> address;
 
     private String role;
 

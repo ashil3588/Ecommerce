@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,15 +39,26 @@ public class Customer implements Serializable {
     private LocalDateTime otpRequestedTime;
     @Column(name = "is_activated")
     private boolean is_activated;
+
+    @OneToOne(mappedBy = "customer")
+    private Wallet wallet;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Wishlist> wishlists;
 //    @Column(name = "is_blocked")
 //    private boolean blocked;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private ShoppingCart cart;
 
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "customers_roles", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-//    private Collection<Role> roles;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Address> address;
+
+
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
 
 
 
