@@ -1,7 +1,8 @@
 package com.example.library.service.impl;
 
-import com.example.library.WalletTransactionType;
+
 import com.example.library.dto.WalletHistoryDto;
+import com.example.library.enums.WalletTransactionType;
 import com.example.library.model.Customer;
 import com.example.library.model.Order;
 import com.example.library.model.Wallet;

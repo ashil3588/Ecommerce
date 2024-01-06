@@ -25,7 +25,7 @@
 <div class="page-header breadcrumb-wrap">
     <div class="container">
         <div class="breadcrumb">
-            <a th:href="@{index.html}" rel="nofollow">Home</a>
+            <a th:href="@{/}" rel="nofollow">Home</a>
             <span></span> Shop
             <span></span> Checkout
         </div>
@@ -142,11 +142,16 @@
                                         <th>Shipping</th>
                                         <td colspan="2"><em>Free Shipping</em></td>
                                     </tr>
-
+                                    <tr th:if="${param.couponCode}">
+                                        <th>Discount</th>
+                                        <td th:text="${param.couponOff} + '%'"></td>
+                                    </tr>
                                     <tr>
                                         <th>Total</th>
                                         <td colspan="2" class="product-subtotal"><span th:text="'₹' + ${shoppingCart.totalPrice}" id="amount" class="font-xl text-brand fw-900"></span></td>
                                     </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -178,7 +183,27 @@
                         <button  class="btn btn-fill-out btn-block hover-up" onclick="placeOrder('hidden-form-placeorder')" >Place Order</button>
 
                     </div>
-
+                    <div class="toggle_info mt-20">
+                        <span><i class="fi-rs-label mr-10"></i><span class="text-muted">Have a coupon?</span> <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your code</a></span>
+                    </div>
+                    <div class="panel-collapse collapse coupon_form" id="coupon">
+                        <div class="panel-body">
+                            <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
+                            <form method="post" th:action="@{/check-out/apply-coupon}">
+                                <div class="form-group">
+                                    <input type="text" th:value="${param.couponCode}" placeholder="Enter Coupon Code..." name="couponCode">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn  btn-md" type="submit" name="action" th:value="${param.couponCode == null ? 'apply' : 'remove'}" th:text="${param.couponCode == null ? 'Apply Coupon' : 'Remove Coupon'}"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="mt-25" th:each="coupon : ${coupons}" style="border: 1px solid #ccc; padding: 10px; margin: 10px;">
+                        <p th:text="${coupon.description}"></p>
+                        <p>Code: <strong th:text="${coupon.code}"></strong></p>
+                        <p>Discount % : <strong th:text="${coupon.offPercentage}"></strong></p>
+                    </div>
                 </div>
             </div>
 
@@ -202,7 +227,16 @@
 <script th:src="@{/js/address.js}"></script>
 <script>
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const couponCode = urlParams.get("couponCode");
 
+    // If couponCode is present, open the coupon form
+    if (couponCode) {
+        const couponForm = document.getElementById("coupon");
+        if (couponForm) {
+            couponForm.classList.add("show"); // Add the "show" class to make it visible
+        }
+    }
 
     function placeOrder(formID) {
         const checkedAddress = $('.selectCheckBox:checked').val();

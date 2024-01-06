@@ -33,6 +33,7 @@
                     <table class="table shopping-summery text-center clean" th:if="${grandTotal}">
                         <thead>
                         <tr class="main-heading">
+                            <th scope="col">click me</th>
                             <th scope="col">Image</th>
                             <th scope="col">Name</th>
                             <th scope="col">Price</th>
@@ -51,7 +52,6 @@
                                 <a th:href="@{/product-full/{id}(id = ${cartItem.product.id})}">
                                     <h3 class="product-name" th:text="${cartItem.product.name}"></h3>
                                 </a>
-<!--                                <h5 th:text="'Size : ' + ${cartItem.size}"></h5>-->
 
                             </td>
                             <td class="price" data-title="Price">
@@ -66,13 +66,6 @@
                                            value="1" min="1" step="1"
                                            class="c-input-text qty text">
 
-<!--                                    <select id="product_categories" name="size" class="form-control w-auto" >-->
-<!--                                        <option th:value = "null">-SELECT SIZE-</option>-->
-<!--                                        <option th:each = "size : ${cartItem.product.sizes}"-->
-<!--                                                th:value = "${size.id}"-->
-<!--                                                th:text = "${size.name}">-->
-<!--                                        </option>-->
-<!--                                    </select>-->
                                 </td>
                                 <td class="total-pr">
                                     <p th:text="'₹' + ${cartItem.unitPrice * cartItem.quantity}"></p>
@@ -111,6 +104,7 @@
                         <hr>
                     </div>
                     <div class="col-12 d-flex shopping-box"><a  th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>
+
                     </div>
                 </div>
 
@@ -129,5 +123,7 @@
 <script th:src="@{/js/plugins/jquery.elevatezoom.js}"></script>
 <!-- Template  JS -->
 <script th:src="@{/js/shop.js?v=3.4}"></script>
+
+
 </body>
 </html>

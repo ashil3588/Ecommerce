@@ -44,7 +44,7 @@
                         <ul>
                             <li th:if = "${session.username == null}"><i class="fi-rs-user"></i><a th:href="@{/login}">Log In</a></li>
                             <li th:unless = "${session.username == null}"><i class="fi-rs-user"></i><a th:href="@{/logout}">Log out</a></li>
-                            <li th:if = "${session.username == null}"><i class="fi-rs-user"></i><a th:href="@{/register}">Sign Up</a></li>
+                            <li th:if = "${session.username == null}"><i class="fi-rs-user"></i><a th:href="@{/verifyEmail}">Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
@@ -68,13 +68,11 @@
                             <div class="header-action-icon-2">
                                 <a th:href="@{/wishlist}">
                                     <img class="svgInject" alt="Evara" th:src="@{/imgs/theme/icons/icon-heart.svg}">
-                                    <!--                                    <span class="pro-count blue">4</span>-->
                                 </a>
                             </div>
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" th:href="@{/cart}">
                                     <img alt="Evara" th:src="@{/imgs/theme/icons/icon-cart.svg}">
-                                    <!--                                    <span class="pro-count blue">2</span>-->
                                 </a>
                             </div>
                         </div>
@@ -107,18 +105,14 @@
                             <ul>
                                 <li><a class="active" th:href="@{/}">Home </a>
                                 </li>
-                                <li>
-                                    <a th:href="@{/about}">About</a>
-                                </li>
+
                                 <li><a th:href="@{/products-list}">Shop</a>
                                 </li>
                                 <li><a th:href="@{/dashboard}">My Account</a>
                                 </li>
                                 <li><a th:href="@{/wallets}">Wallet</a>
                                 </li>
-                                <li>
-                                    <a th:href="@{/contact}">Contact</a>
-                                </li>
+
                             </ul>
                         </nav>
                     </div>
@@ -188,16 +182,12 @@
 
                         <li><a class="active" th:href="@{/}">Home </a>
                         </li>
-                        <li>
-                            <a th:href="@{/about}">About</a>
-                        </li>
+
                         <li><a th:href="@{/products-list}">Shop</a>
                         </li>
                         <li><a th:href="@{/dashboard}">My Account</a>
                         </li>
-                        <li>
-                            <a th:href="@{/contact}">Contact</a>
-                        </li>
+
                     </ul>
                 </nav>
                 <!-- mobile menu end -->
@@ -227,33 +217,7 @@
     </div>
 </div>
 <main class="main">
-    <section class="home-slider position-relative pt-25 pb-20">
-        <div class="container">
-            <div class="row">
-                <div class="position-relative">
-                    <div class="hero-slider-1 style-3 dot-style-1 dot-style-1-position-1">
-                        <div class="single-hero-slider single-animation-wrap" th:if="${banner.enabled==true}" th:each="banner : ${banners}">
-                            <div class="container">
-                                <div class="slider-1-height-3 slider-animated-1">
-                                    <div class="hero-slider-content-2">
-                                        <h4 class="animated" th:text="${banner.name}"></h4>
-                                        <h2 class="animated fw-900"  th:text="${banner.description_1}"></h2>
-                                        <h1 class="animated fw-900 text-brand" th:text="${banner.description_2}"></h1>
-                                        <p class="animated" th:text="${banner.description_3}"></p>
-                                        <a class="animated btn btn-brush btn-brush-3"th:href="@{/product-full/{id}(id = ${banner.product.id})}"> Shop Now </a>
-                                    </div>
-                                    <div class="slider-img">
-                                        <img style="width: 100%" th:src="@{|/imgs/images/${banner.bannerFile}|}" alt="BannerImage">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-arrow hero-slider-1-arrow style-3"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+
     <section class="product-tabs section-padding position-relative wow fadeIn animated">
         <div class="container">
             <div class="tab-header">
@@ -261,12 +225,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="nav-tab-one" data-bs-toggle="tab" data-bs-target="#tab-one" type="button" role="tab" aria-controls="tab-one" aria-selected="true">Featured</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="nav-tab-two" data-bs-toggle="tab" data-bs-target="#tab-two" type="button" role="tab" aria-controls="tab-two" aria-selected="false">Popular</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="nav-tab-three" data-bs-toggle="tab" data-bs-target="#tab-three" type="button" role="tab" aria-controls="tab-three" aria-selected="false">New added</button>
-                    </li>
+
                 </ul>
                 <a href="#" class="view-more d-none d-md-flex">View More<i class="fi-rs-angle-double-small-right"></i></a>
             </div>
@@ -320,116 +279,13 @@
                 </div>
 
                 <!--En tab one (Featured)-->
-                <div class="tab-pane fade" id="tab-two" role="tabpanel" aria-labelledby="tab-two">
-                    <div class="row product-grid-4">
-                        <div class="col-lg-3 col-md-4 col-12 col-sm-6" th:each="product : ${products}">
-                            <div class="product-cart-wrap mb-30">
-                                <div class="product-img-action-wrap">
-                                    <div class="product-img product-img-zoom">
-                                        <a th:href="@{/product-full/{id}(id = ${product.id})}">
-                                            <img class="default-img" th:src="@{|/imgs/images/${product.image[0].getName()}|}" alt="ProductImage">
-                                            <img class="hover-img" th:src="@{|/imgs/images/${product.image[0].getName()}|}" alt="ProductImage">
-                                        </a>
-                                    </div>
-                                    <div class="product-action-1">
-                                        <a aria-label="Add To Wishlist" class="action-btn wish-btn hover-up" th:href="@{/add-wishlist}" th:data-product-id="${product.id}"><i class="fi-rs-heart"></i></a>
-                                    </div>
-                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                        <span class="hot">Hot</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap">
-                                    <div class="product-category">
-                                        <a  th:text = "${product.category.name}"></a>
-                                    </div>
-                                    <h2><a th:href="@{/product-full/{id}(id = ${product.id})}" th:text = "${product.name}"></a></h2>
-                                    <div class="rating-result" title="90%">
-                                            <span>
-                                                <span>90%</span>
-                                            </span>
-                                    </div>
-                                    <div class="product-price">
-                                        <span th:unless="${product.salePrice > 0}">₹[(${product.costPrice})]</span>
-                                        <span th:if="${product.salePrice > 0}">₹[(${product.salePrice})]</span>
-                                        <span th:if="${product.salePrice > 0}" class="old-price">₹[(${product.costPrice})]</span>
-                                    </div>
-                                    <form th:action="@{/add-to-cart}" method="post" th:id="'form_' + ${product.id}">
-                                        <input type="hidden" name="productId" th:value="${product.id}" />
-                                        <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" th:data-product-id="${product.id}" onclick="submitForm(this.getAttribute('data-product-id')); return false;"><i class="fi-rs-shopping-bag-add"></i></a>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!--End product-grid-4-->
-                    </div>
-                </div>
-                <!--En tab two (Popular)-->
-                <div class="tab-pane fade" id="tab-three" role="tabpanel" aria-labelledby="tab-three">
-                    <div class="row product-grid-4">
-                        <div class="col-lg-3 col-md-4 col-12 col-sm-6" th:each="product : ${products}">
-                            <div class="product-cart-wrap mb-30">
-                                <div class="product-img-action-wrap">
-                                    <div class="product-img product-img-zoom">
-                                        <a th:href="@{/product-full/{id}(id = ${product.id})}">
-                                            <img class="default-img" th:src="@{|/imgs/images/${product.image[0].getName()}|}" alt="ProductImage">
-                                            <img class="hover-img" th:src="@{|/imgs/images/${product.image[0].getName()}|}" alt="ProductImage">
-                                        </a>
-                                    </div>
-                                    <div class="product-action-1">
-                                        <a aria-label="Add To Wishlist" class="action-btn wish-btn hover-up" th:href="@{/add-wishlist}" th:data-product-id="${product.id}"><i class="fi-rs-heart"></i></a>
-                                    </div>
-                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                        <span class="hot">Hot</span>
-                                    </div>
-                                </div>
-                                <div class="product-content-wrap">
-                                    <div class="product-category">
-                                        <a  th:text = "${product.category.name}"></a>
-                                    </div>
-                                    <h2><a th:href="@{/product-full/{id}(id = ${product.id})}" th:text = "${product.name}"></a></h2>
-                                    <div class="rating-result" title="90%">
-                                            <span>
-                                                <span>90%</span>
-                                            </span>
-                                    </div>
-                                    <div class="product-price">
-                                        <span th:unless="${product.salePrice > 0}">₹[(${product.costPrice})]</span>
-                                        <span th:if="${product.salePrice > 0}">₹[(${product.salePrice})]</span>
-                                        <span th:if="${product.salePrice > 0}" class="old-price">₹[(${product.costPrice})]</span>
-                                    </div>
-                                    <form th:action="@{/add-to-cart}" method="post" th:id="'form_' + ${product.id}">
-                                        <input type="hidden" name="productId" th:value="${product.id}" />
-                                        <div class="product-action-1 show">
-                                            <a aria-label="Add To Cart" class="action-btn hover-up" th:data-product-id="${product.id}" onclick="submitForm(this.getAttribute('data-product-id')); return false;"><i class="fi-rs-shopping-bag-add"></i></a>
-
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--End product-grid-4-->
-                </div>
                 <!--En tab three (New added)-->
             </div>
             <!--End tab-content-->
         </div>
     </section>
-    <!--    <section class="banner-2 section-padding pb-0">-->
-    <!--        <div class="container">-->
-    <!--            <div class="banner-img banner-big wow fadeIn animated f-none">-->
-    <!--                <img src="/imgs/banner/banner-4.png" alt="">-->
-    <!--                <div class="banner-text d-md-block d-none">-->
-    <!--                    <h4 class="mb-15 mt-40 text-brand">Repair Services</h4>-->
-    <!--                    <h1 class="fw-600 mb-20">We're an Apple <br>Authorised Service Provider</h1>-->
-    <!--                    <a href="shop-grid-right.html" class="btn">Learn More <i class="fi-rs-arrow-right"></i></a>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </section>-->
+
     <section class="popular-categories section-padding mt-15 mb-25">
         <div class="container wow fadeIn animated">
             <h3 class="section-title mb-20"><span>Popular</span> Categories</h3>
@@ -481,33 +337,7 @@
             </div>
         </div>
     </section>
-    <section class="mb-45">
-        <div class="container">
-            <div class="row">
-                <div class="position-relative">
-                    <div class="hero-slider-1 style-3 dot-style-1 dot-style-1-position-1">
-                        <div class="single-hero-slider single-animation-wrap" th:if="${banner.enabled==true}" th:each="banner : ${banners}">
-                            <div class="container">
-                                <div class="slider-1-height-3 slider-animated-1">
-                                    <div class="hero-slider-content-2">
-                                        <h4 class="animated" th:text="${banner.name}"></h4>
-                                        <h2 class="animated fw-900"  th:text="${banner.description_1}"></h2>
-                                        <h1 class="animated fw-900 text-brand" th:text="${banner.description_2}"></h1>
-                                        <p class="animated" th:text="${banner.description_3}"></p>
-                                        <a class="animated btn btn-brush btn-brush-3"th:href="@{/product-full/{id}(id = ${banner.product.id})}"> Shop Now </a>
-                                    </div>
-                                    <div class="slider-img">
-                                        <img style="width: 100%" th:src="@{|/imgs/images/${banner.bannerFile}|}" alt="BannerImage">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slider-arrow hero-slider-1-arrow style-3"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 </main>
 <footer class="main">
     <section class="newsletter p-30 text-white wow fadeIn animated">

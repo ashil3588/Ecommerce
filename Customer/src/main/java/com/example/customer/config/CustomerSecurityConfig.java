@@ -36,54 +36,12 @@ public class CustomerSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-//        http.authorizeHttpRequests(configurer->
-//                        configurer
-//
-//                                .requestMatchers("/**","/about","/contact","/productDetails").permitAll()
-//                                .requestMatchers("/css/**","/fonts/**","/images/**","/js/**","/login/**","/register/**").permitAll()
-//
-//                                .anyRequest().authenticated()
-//
-//
-//
-//                )
-//
-//                .formLogin(form->
-//                        form
-//                                .loginPage("/login")
-//                                .loginProcessingUrl("/authenticateTheUser")
-//                                .successHandler(customSuccessHandler)
-//                                .permitAll()
-//
-//                )
-//                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-//                        .invalidSessionUrl("/")
-//                        .maximumSessions(1)
-//                        .maxSessionsPreventsLogin(false)
-//
-//
-//
-//                )
-//
-//
-//                .logout(LogoutConfigurer->
-//                        LogoutConfigurer
-//                                .logoutSuccessUrl("/login")
-//
-//                )
-//                .csrf(AbstractHttpConfigurer::disable);
-//
-//
-//
-//        return http.build();
-//    }
+
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/css/**", "/imgs/**", "/js/**", "/fonts/**", "/register/**", "/do-register/**", "/**", "/address").permitAll()
-//                                .requestMatchers("/shop/**").hasAuthority("User")
-                                .requestMatchers("/login", "/do-login", "/verify-otp").permitAll()
+                                .requestMatchers("/login", "/do-login").permitAll()
                                 .requestMatchers("/dashboard").authenticated()
                                 .anyRequest().authenticated()
                 )
@@ -93,7 +51,6 @@ public class CustomerSecurityConfig {
                                 .loginProcessingUrl("/do-login")
                                 .defaultSuccessUrl("/dashboard")
                                 .successHandler(customSuccessHandler)
-//                                .failureHandler(loginFailureHandler)
                                 .permitAll()
                 )
                 .logout(

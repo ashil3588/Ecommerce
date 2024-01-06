@@ -45,8 +45,7 @@ public class Customer implements Serializable {
 
     @OneToMany(mappedBy = "customer")
     private List<Wishlist> wishlists;
-//    @Column(name = "is_blocked")
-//    private boolean blocked;
+
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
     private ShoppingCart cart;

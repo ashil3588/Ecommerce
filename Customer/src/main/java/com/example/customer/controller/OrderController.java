@@ -1,6 +1,7 @@
 package com.example.customer.controller;
 
 import com.example.library.dto.AddressDto;
+import com.example.library.dto.CouponDto;
 import com.example.library.model.*;
 import com.example.library.service.*;
 import com.razorpay.RazorpayClient;
@@ -19,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @Controller
 public class OrderController {
@@ -28,14 +31,16 @@ public class OrderController {
     private ShoppingCartService shoppingCartService;
     private AddressService addressService;
 
+    private CouponService couponService;
     private WalletService walletService;
 
     public OrderController(CustomerService customerService, OrderService orderService, ShoppingCartService shoppingCartService,
-                           AddressService addressService, WalletService walletService) {
+                           AddressService addressService, CouponService couponService, WalletService walletService) {
         this.addressService=addressService;
         this.customerService = customerService;
         this.orderService = orderService;
         this.shoppingCartService = shoppingCartService;
+        this.couponService=couponService;
         this.walletService=walletService;
     }
 
@@ -50,9 +55,9 @@ public class OrderController {
             Set<CartItem> cartItems=cart.getCartItems();
             List<Address> addressList = customer.getAddress();
             Wallet wallet=walletService.findByCustomer(customer);
-
+            List<CouponDto> couponDto=couponService.getAllCoupons();
             model.addAttribute("wallet",wallet);
-
+            model.addAttribute("coupons",couponDto);
             model.addAttribute("addressDto",new AddressDto());
             model.addAttribute("customer", customer);
             model.addAttribute("addressList", addressList);
@@ -65,7 +70,47 @@ public class OrderController {
         }
     }
 
+    @RequestMapping(value = "/check-out/apply-coupon", method = RequestMethod.POST, params = "action=apply")
+    public String applyCoupon(@RequestParam("couponCode")String couponCode,Principal principal,
+                              RedirectAttributes attributes,HttpSession session){
 
+
+        if(couponService.findByCouponCode(couponCode.toUpperCase())) {
+
+            Coupon coupon = couponService.findByCode(couponCode.toUpperCase());
+            ShoppingCart cart = customerService.findByEmail(principal.getName()).getCart();
+            Double totalPrice = cart.getTotalPrice();
+            session.setAttribute("totalPrice",totalPrice);
+            Double newTotalPrice = couponService.applyCoupon(couponCode.toUpperCase(), totalPrice);
+
+            shoppingCartService.updateTotalPrice(newTotalPrice, principal.getName());
+
+            attributes.addFlashAttribute("success", "Coupon applied Successfully");
+            attributes.addAttribute("couponCode", couponCode);
+            attributes.addAttribute("couponOff", coupon.getOffPercentage());
+            return "redirect:/check-out";
+        }else{
+            attributes.addFlashAttribute("error", "Coupon Code invalid");
+            return "redirect:/check-out";
+        }
+
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/check-out/apply-coupon", method = RequestMethod.POST, params = "action=remove")
+    public String removeCoupon(Principal principal,RedirectAttributes attributes,
+                               HttpSession session){
+
+        Double totalPrice = (Double) session.getAttribute("totalPrice");
+        shoppingCartService.updateTotalPrice(totalPrice, principal.getName());
+        attributes.addFlashAttribute("success", "Coupon removed Successfully");
+
+        return "redirect:/check-out";
+    }
 
 
     @RequestMapping(value = "/add-order",method = RequestMethod.POST)

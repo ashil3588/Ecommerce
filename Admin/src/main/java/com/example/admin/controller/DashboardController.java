@@ -43,14 +43,7 @@ public class DashboardController {
         this.orderService = orderService;
     }
 
-//    @GetMapping("/")
-//    public String getIndex(HttpSession session) {
-////        Object attribute = session.getAttribute("userLoggedIn");
-////        if (attribute != null) {
-////            return "redirect:/dashboard";
-////        }
-//        return "index";
-//    }
+
 
     @GetMapping("/")
     public String getIndex(HttpSession session, Principal principal, Model model,

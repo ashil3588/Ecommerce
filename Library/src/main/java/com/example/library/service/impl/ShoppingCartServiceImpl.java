@@ -218,18 +218,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
 
-//    private CartItem find(Set<CartItem> cartItems, long productId,String size) {
-//        if (cartItems == null) {
-//            return null;
-//        }
-//        CartItem cartItem = null;
-//        for (CartItem item : cartItems) {
-//            if (item.getProduct().getId() == productId && size.equals(item.getSize())) {
-//                cartItem = item;
-//            }
-//        }
-//        return cartItem;
-//    }
+
 
 
     private double totalPrice(Set<CartItem> cartItemList) {

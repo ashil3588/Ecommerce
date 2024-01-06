@@ -15,7 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/imgs/theme/favicon.svg}">
     <!-- Template CSS -->
     <link rel="stylesheet" th:href="@{/css/main.css}">
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css" integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css}" integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 </head>
@@ -67,18 +67,14 @@
                         <ul>
                             <li><a class="active" th:href="@{/}">Home </a>
                             </li>
-                            <li>
-                                <a th:href="@{/about}">About</a>
-                            </li>
+
                             <li><a th:href="@{/products-list}">Shop</a>
                             </li>
                             <li><a th:href="@{/dashboard}">My Account</a>
-<!--                            </li>-->
-<!--                            <li><a th:href="@{/wallets}">Wallet</a>-->
-<!--                            </li>-->
-                            <li>
-                                <a th:href="@{/contact}">Contact</a>
                             </li>
+                            <li><a th:href="@{/wallets}">Wallet</a>
+                            </li>
+
                         </ul>
                     </nav>
                 </div>
@@ -116,7 +112,7 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a th:href="@{index.html}" rel="nofollow">Home</a>
+                <a th:href="@{/}" rel="nofollow">Home</a>
                 <span></span> Pages
                 <span></span> Account
             </div>

@@ -1,5 +1,6 @@
 package com.example.library.service.impl;
 
+import com.example.library.Exception.CustomerNotFoundException;
 import com.example.library.dto.CustomerDto;
 import com.example.library.model.Customer;
 import com.example.library.repository.CustomerRepository;
@@ -137,26 +138,24 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-    @Override
-    public void updateResetPasswordToken(String token, String email)  {
+    public void updateResetPasswordToken(String token, String email) throws CustomerNotFoundException {
         Customer customer = customerRepository.findByEmail(email);
         if (customer != null) {
             customer.setResetPasswordToken(token);
             customerRepository.save(customer);
+        } else {
+            throw new CustomerNotFoundException("Could not find any customer with the email " + email);
         }
     }
 
-    @Override
     public Customer getByResetPasswordToken(String token) {
         return customerRepository.findByResetPasswordToken(token);
     }
 
-    @Override
     public void updatePassword(Customer customer, String newPassword) {
         customer.setPassword(newPassword);
 
         customer.setResetPasswordToken(null);
         customerRepository.save(customer);
     }
-
 }

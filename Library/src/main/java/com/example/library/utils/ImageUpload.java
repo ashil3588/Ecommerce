@@ -15,7 +15,7 @@ import java.nio.file.StandardOpenOption;
 @Service
 public class ImageUpload {
 
-//    String rootPath = System.getProperty("user.home");
+
 
     String UPLOAD_FOLDER = "/Admin/src/main/resources/static/imgs/images";
 

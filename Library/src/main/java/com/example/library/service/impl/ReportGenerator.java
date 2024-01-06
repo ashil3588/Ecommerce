@@ -68,6 +68,20 @@ public class ReportGenerator {
             }
 
             document.add(table);
+
+            int totalQuantitySold = 0;
+            double totalRevenue = 0.0;
+
+            for (Object[] productStat : productStats) {
+                totalQuantitySold += ((Long) productStat[3]).intValue();
+                totalRevenue += (double) productStat[4];
+            }
+
+            // Add total quantity sold and total revenue as additional lines in the PDF
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("Total Quantity Sold: " + totalQuantitySold));
+            document.add(new Paragraph("Total Revenue: " + totalRevenue));
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -113,6 +127,20 @@ public class ReportGenerator {
             }
 
             writer.flush();
+
+            // Calculate totals
+            int totalQuantitySold = 0;
+            double totalRevenue = 0.0;
+
+            for (Object[] productStat : productStats) {
+                totalQuantitySold += (int) productStat[3];
+                totalRevenue += (double) productStat[4];
+            }
+
+            // Add total quantity sold and total revenue as additional lines in the CSV
+            writer.printf("Total Quantity Sold: %s%n", totalQuantitySold);
+            writer.printf("Total Revenue: %s%n", totalRevenue);
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

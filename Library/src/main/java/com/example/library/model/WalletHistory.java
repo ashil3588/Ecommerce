@@ -1,6 +1,7 @@
 package com.example.library.model;
 
-import com.example.library.WalletTransactionType;
+
+import com.example.library.enums.WalletTransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

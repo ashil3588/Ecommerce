@@ -55,14 +55,7 @@ public class CustomerController {
         }
     }
 
-//    @GetMapping("/about")
-//    public String getAboutUs(){
-//        return "about";
-//    }
-//    @GetMapping("/contact")
-//    public String getContactUs(){
-//        return "contact";
-//    }
+
 
 
     @GetMapping("/address")

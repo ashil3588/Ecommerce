@@ -1,6 +1,6 @@
 package com.example.library.dto;
 
-import com.example.library.WalletTransactionType;
+import com.example.library.enums.WalletTransactionType;
 import com.example.library.model.Wallet;
 import lombok.AllArgsConstructor;
 import lombok.Data;

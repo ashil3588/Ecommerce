@@ -62,13 +62,7 @@
                                 <td class="product-des product-name">
                                     <h5 class="product-name"><a th:href="@{/product-full/{id}(id = ${wishlist.product.id})}" th:text="${wishlist.product.name}"></a></h5>
                                     <form id="addToCart" th:action="@{/add-to-cart}" method="post">
-                                        <select id="product_categories" name="selectedSizeId" class="form-control w-auto" required>
-<!--                                            <option th:value = "null">-SELECT SIZE-</option>-->
-<!--                                            <option th:each = "size : ${wishlist.product.sizes}"-->
-<!--                                                    th:value = "${size.id}"-->
-<!--                                                    th:text = "${size.name}">-->
-<!--                                            </option>-->
-                                        </select>
+
                                         <input type="hidden" name="productId" th:value="${wishlist.product.id}" />
                                         <button class="btn btn-sm"  id="addToCartButton" type="submit"><i class="fi-rs-shopping-bag mr-5"></i>Add to cart</button>
                                     </form>

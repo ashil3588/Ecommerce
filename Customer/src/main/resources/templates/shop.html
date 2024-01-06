@@ -24,7 +24,7 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a th:href="@{index.html}" rel="nofollow">Home</a>
+                <a th:href="@{/}" rel="nofollow">Home</a>
                 <span></span> Shop
             </div>
         </div>
@@ -85,13 +85,7 @@
                                 <p th:text="${product.shortDescription}" class="mt-15"></p>
                                 <div class="detail-extralink" >
                                     <form id="addToCart" th:action="@{/add-to-cart}" method="post">
-<!--                                        <select id="product_categories" name="selectedSizeId" class="form-control w-auto" required>-->
-<!--                                            <option th:value = "null">-SELECT SIZE-</option>-->
-<!--                                            <option th:each = "size : ${product.sizes}"-->
-<!--                                                    th:value = "${size.id}"-->
-<!--                                                    th:text = "${size.name}">-->
-<!--                                            </option>-->
-<!--                                        </select>-->
+
                                         <div>
                                             <input type="number" name="quantity"  size="2"
                                                    value="1" min="1" step="1"

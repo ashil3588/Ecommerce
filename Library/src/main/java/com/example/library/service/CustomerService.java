@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.Exception.CustomerNotFoundException;
 import com.example.library.dto.CustomerDto;
 import com.example.library.model.Customer;
 import jakarta.mail.MessagingException;
@@ -34,7 +35,7 @@ public interface CustomerService {
 
 
 
-    void updateResetPasswordToken(String token, String email);
+    void updateResetPasswordToken(String token, String email) throws CustomerNotFoundException;
     Customer getByResetPasswordToken(String token);
     void updatePassword(Customer customer, String newPassword);
 
