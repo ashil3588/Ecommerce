@@ -19,7 +19,7 @@
         <version>3.1.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
+    <groupId>com.example.library</groupId>
     <artifactId>Library</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Library</name>
